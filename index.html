@@ -12,23 +12,43 @@
             - container - card - card-content 
     -->
     <h1>My Library</h1>
-    <div class="book-container">
-      <!-- <div class="card">
-        <p class="book-title"></p>
-        <p class="book-author"></p>
-        <p class="book-status"></p>
-      </div>
-      <div class="card">
-        <p class="book-title"></p>
-        <p class="book-author"></p>
-        <p class="book-status"></p>
-      </div>
-      <div class="card">
-        <p class="book-title"></p>
-        <p class="book-author"></p>
-        <p class="book-status"></p>
-      </div> -->
-    </div>
+
+    <!-- 
+        Add A New Book feature 
+         - New Book Button -> form dialog 
+            - 
+         
+    -->
+
+    <dialog id="form-dialog">
+      <h2>Add a New Book</h2>
+      <form action="dialog" id="bookForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required />
+
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required />
+
+        <label for="title">Pages:</label>
+        <input type="number" id="pages" name="pages" required />
+
+        <label for="status">Status:</label>
+        <select name="status" id="status-select">
+          <option value="">--Please select an option--</option>
+          <option value="read">Read</option>
+          <option value="not read">Not Read</option>
+        </select>
+
+        <div class="btn-container">
+          <button>Clear</button>
+          <button type="submit">Submit</button>
+          <button type="button" id="close-dialog">Cancel</button>
+        </div>
+      </form>
+    </dialog>
+    <button class="add-book" id="open-dialog">Add a New Book</button>
+
+    <div class="book-container"></div>
 
     <script src="./script.js"></script>
   </body>
