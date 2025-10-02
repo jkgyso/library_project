@@ -7,6 +7,72 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <!-- 
+        Books structure 
+            - container - card - card-content 
+    -->
+    <h1>My Library</h1>
+    <div class="book-container">
+      <!-- <div class="card">
+        <p class="book-title"></p>
+        <p class="book-author"></p>
+        <p class="book-status"></p>
+      </div>
+      <div class="card">
+        <p class="book-title"></p>
+        <p class="book-author"></p>
+        <p class="book-status"></p>
+      </div>
+      <div class="card">
+        <p class="book-title"></p>
+        <p class="book-author"></p>
+        <p class="book-status"></p>
+      </div> -->
+    </div>
+
     <script src="./script.js"></script>
   </body>
 </html>
+
+<!-- 
+
+  1st Requirement 
+ - book objects are going to be stored in an array 
+ - Use a constructor for books 
+ - add a separate function that can take some arguments 
+  - create a book from those arguments 
+  - book objects should have a unique id using crypto.randomUUID();
+    - purpose: ensures each book has a unique and stable identifier, preventing issues when books are removed or rearranged. 
+
+
+    2nd requirement 
+        - write a function that loops through the array and displays each book on the page 
+        - this can be displayed in some sort of a table or each on their own card. 
+
+    3rd requirement 
+        - add a New Book button that brings up a form allowing users to input the details for the new book and add it to the library 
+            - author 
+            - title
+            - number of pages 
+            - read or unread 
+        - when using a form, remember to use event.preventDefault();
+
+    4th requirement 
+        - add a button on each book's display to remove the book from the library 
+            - Clue: give book elements a data-attribute that corresponds to the unique id of the respective book object. 
+
+    5th requirement
+        - add a button on each book's display to change its read status 
+            - You will want to create Book prototype function that toggles a book instance's read status 
+
+    SUMMARY: 
+        1. Add books 
+            - add author, title, number of pages, read or unread 
+            - add unique ID using crypto.randomUUID()
+        2. Display each book 
+        3. New Book button that opens a form and should input 
+            - author, title, number of pages, read or unread 
+        4. Add remove button to each card 
+        5. Add a button to change the read status 
+
+-->
