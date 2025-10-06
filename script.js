@@ -18,6 +18,11 @@ function Book(author, title, pages, readStatus) {
     this.id = crypto.randomUUID()
 }
 
+// Prototype to toggle read status 
+Book.prototype.toggleReadStatus = function () {
+    this.readStatus = this.readStatus === 'read' ? 'not read' : 'read';
+}
+
 
 // Add Books to Library
 function addBookToLibrary(author, title, pages, readStatus) {
@@ -30,50 +35,56 @@ addBookToLibrary('F. Scott Fitzgerald', 'The Great Gatsby', 180, 'not read');
 addBookToLibrary('George Orwell', '1984', 328, 'read');
 addBookToLibrary('J.R.R Tolkien', 'The Hobbit', 310, 'read');
 
-console.log(myLibrary)
-console.log(myLibrary[0].readStatus)
+
+// Create book card 
+const createBookCard = book => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.id = book.id;
+
+    const title = document.createElement('p');
+    title.classList.add('book-title');
+    title.textContent = book.title;
+
+    const author = document.createElement('p');
+    author.classList.add('book-author');
+    author.textContent = `Author: ${book.author}`;
+
+    const pages = document.createElement('p');
+    pages.classList.add('book-pages');
+    pages.textContent = `Pages: ${book.pages}`;
+
+    const status = document.createElement('p');
+    status.classList.add('book-status');
+    status.textContent = `Status: `
+
+    
+    const spanStatus = document.createElement('span');
+    book.readStatus === 'read' ? spanStatus.classList.add('read') : spanStatus.classList.add('not-read')
+    spanStatus.textContent = `${book.readStatus.charAt(0).toUpperCase()}${book.readStatus.slice(1)}`;
+    status.appendChild(spanStatus);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.classList.add('remove-button');
+    removeBtn.textContent = 'Remove';
+
+    card.appendChild(title);
+    card.appendChild(author);
+    card.appendChild(pages);
+    card.appendChild(status);
+    card.appendChild(removeBtn);
+
+    return card;
+}
+
 
 // Display books 
 const displayBooks = () => {
 
+    bookContainer.innerHTML = '';
     myLibrary.forEach(book => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-
+        const card = createBookCard(book);
         bookContainer.appendChild(card);
-
-        const title = document.createElement('p');
-        title.classList.add('book-title')
-        title.textContent = book.title;
-        
-        const author = document.createElement('p');
-        author.classList.add('book-author');
-        author.textContent = `Author: ${book.author}`;
-
-        const pages = document.createElement('p');
-        pages.classList.add('book-pages');
-        pages.textContent = `Pages: ${book.pages}`;
-
-        const status = document.createElement('p');
-        status.classList.add('book-status')
-        const spanStatus = document.createElement('span');
-
-        book.readStatus === 'read' ? spanStatus.classList.add('read') : spanStatus.classList.add('not-read')
-        status.textContent = `Status: `;
-        spanStatus.textContent = `${book.readStatus.replace(book.readStatus[0], book.readStatus[0].toUpperCase())}`;
-        status.appendChild(spanStatus);
-
-        
-
-        const removeBtn = document.createElement('button');
-        removeBtn.classList.add('remove-button');
-        removeBtn.textContent = `Remove`;
-
-        card.appendChild(title);
-        card.appendChild(author);
-        card.appendChild(pages);
-        card.appendChild(status);
-        card.appendChild(removeBtn)
     })
 }
 
@@ -86,52 +97,10 @@ const addNewBook = event => {
     const status = document.querySelector('#status-select').value;
    
     addBookToLibrary(author, title, pages, status);
-    renderNewBook();
+    displayBooks();
     clearInputFields()
     formDialog.close();
 
-}
-
-// Render new Book
-const renderNewBook = () => {
-    const lastBookSaved = myLibrary[myLibrary.length - 1];
-
-     const card = document.createElement('div');
-    card.classList.add('card');
-
-    bookContainer.appendChild(card);
-
-    const title = document.createElement('p');
-    title.classList.add('book-title')
-    title.textContent = lastBookSaved.title;
-    
-    const author = document.createElement('p');
-    author.classList.add('book-author');
-    author.textContent = `Author: ${lastBookSaved.author}`;
-
-    const pages = document.createElement('p');
-    pages.classList.add('book-pages');
-    pages.textContent = `Pages: ${lastBookSaved.pages}`;
-
-    const status = document.createElement('p');
-    status.classList.add('book-status')
-    const spanStatus = document.createElement('span');
-
-    lastBookSaved.readStatus === 'read' ? spanStatus.classList.add('read') : spanStatus.classList.add('not-read')
-    status.textContent = `Status: `;
-    spanStatus.textContent = `${lastBookSaved.readStatus.replace(lastBookSaved.readStatus[0], lastBookSaved.readStatus[0].toUpperCase())}`;
-
-    status.appendChild(spanStatus);
-
-    const removeBtn = document.createElement('button');
-    removeBtn.classList.add('remove-button');
-    removeBtn.textContent = `Remove`;
-
-    card.appendChild(title);
-    card.appendChild(author);
-    card.appendChild(pages);
-    card.appendChild(status);
-    card.appendChild(removeBtn);
 }
 
 // Clear input fields
@@ -146,26 +115,32 @@ const closeModal = () => {
 
 // Remove Book 
 const removeBook = event => {
-    const book = event.target;
-    const card = document.querySelector('.card');
-    if (book.classList.contains('remove-button')) {
-        card.remove();
-    }
+    if (event.target.classList.contains('remove-button')) {
+        const card = event.target.closest('.card');
+        const bookId = card.dataset.id; 
+
+        const bookIndex = myLibrary.findIndex(book => book.id === bookId);
+
+        if (bookIndex !== -1) {
+            myLibrary.splice(bookIndex, 1);
+        }
+
+        displayBooks();
+   }
 }
 
 // Toggle Read status 
 const toggleStatus = event => {
-    console.log(event.target);
-    const status = event.target; 
+    if (event.target.classList.contains('read') || event.target.classList.contains('not-read')) {
+        const card = event.target.closest('.card');
+        const bookId = card.dataset.id; 
 
-    if (status.classList.contains('read')) {
-        status.classList.add('not-read');
-        status.classList.remove('read');
-        status.textContent = 'Not read';
-    } else if (status.classList.contains('not-read')) {
-        status.classList.add('read');
-        status.classList.remove('not-read');
-        status.textContent = 'Read';
+        const book = myLibrary.find(book => book.id === bookId);
+
+        if (book) {
+            book.toggleReadStatus();
+            displayBooks();
+        }
     }
 }
 
