@@ -1,8 +1,9 @@
 const bookContainer = document.querySelector('.book-container');
 const formDialog = document.querySelector('#form-dialog');
-const openDialogForm = document.querySelector('#open-dialog');
-const closeDialogForm = document.querySelector('#close-dialog');
+const openDialogFormBtn = document.querySelector('#open-dialog');
+const closeDialogFormBtn = document.querySelector('#close-dialog');
 const addBookForm = document.querySelector('#bookForm');
+const clearBtn = document.querySelector('#clear-btn');
 
 
 
@@ -58,7 +59,7 @@ const displayBooks = () => {
 
         book.readStatus === 'read' ? spanStatus.classList.add('read') : spanStatus.classList.add('not-read')
         status.textContent = `Status: `;
-        spanStatus.textContent = `${book.readStatus}`;
+        spanStatus.textContent = `${book.readStatus.replace(book.readStatus[0], book.readStatus[0].toUpperCase())}`;
         status.appendChild(spanStatus);
 
         
@@ -82,15 +83,11 @@ const addNewBook = event => {
     const author = document.querySelector('input[id=author]').value;
     const pages = document.querySelector('input[id=pages]').value;
     const status = document.querySelector('#status-select').value;
-
-    const statusUpper = status.replace(status[0], status[0].toUpperCase());
    
-    addBookToLibrary(author, title, pages, statusUpper);
+    addBookToLibrary(author, title, pages, status);
     renderNewBook();
-
-
+    clearInputFields()
     formDialog.close();
-    console.log(myLibrary)
 
 }
 
@@ -121,7 +118,8 @@ const renderNewBook = () => {
 
     lastBookSaved.readStatus === 'read' ? spanStatus.classList.add('read') : spanStatus.classList.add('not-read')
     status.textContent = `Status: `;
-    spanStatus.textContent = `${lastBookSaved.readStatus}`;
+    spanStatus.textContent = `${lastBookSaved.readStatus.replace(lastBookSaved.readStatus[0], lastBookSaved.readStatus[0].toUpperCase())}`;
+
     status.appendChild(spanStatus);
 
     const removeBtn = document.createElement('button');
@@ -132,7 +130,17 @@ const renderNewBook = () => {
     card.appendChild(author);
     card.appendChild(pages);
     card.appendChild(status);
-    card.appendChild(removeBtn)
+    card.appendChild(removeBtn);
+}
+
+// Clear input fields
+const clearInputFields = () => {
+    addBookForm.reset();
+}
+
+// Close Modal 
+const closeModal = () => {
+    formDialog.close();
 }
 
 // Remove Book 
@@ -152,26 +160,32 @@ const toggleStatus = event => {
     if (status.classList.contains('read')) {
         status.classList.add('not-read');
         status.classList.remove('read');
-        status.textContent = 'not read';
+        status.textContent = 'Not read';
     } else if (status.classList.contains('not-read')) {
         status.classList.add('read');
         status.classList.remove('not-read');
-        status.textContent = 'read';
+        status.textContent = 'Read';
     }
 }
 
 // Display existing books 
 window.addEventListener('DOMContentLoaded', displayBooks);
 // Open Modal
-openDialogForm.addEventListener('click', () => {
+openDialogFormBtn.addEventListener('click', () => {
     formDialog.showModal();
 });
 // Close Modal 
-closeDialogForm.addEventListener('click', () => {
-    formDialog.close();
+closeDialogFormBtn.addEventListener('click', closeModal)
+// Close Modal on backdrop click 
+formDialog.addEventListener('click', (event) => {
+    if (event.target.id === "form-dialog") {
+        formDialog.close();
+    }
 })
 // Add Book Form 
 addBookForm.addEventListener('submit', addNewBook)
+// Clear input Fields 
+clearBtn.addEventListener('click', clearInputFields);
 // Remove Book 
 bookContainer.addEventListener('click', removeBook)
 // Toggle Status Button 

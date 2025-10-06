@@ -5,13 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project: Library</title>
     <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <!-- 
-        Books structure 
-            - container - card - card-content 
-    -->
-    <h1>My Library</h1>
+    <nav id="navbar">
+      <div class="logo">Turn the Page</div>
+      <div class="nav-container">
+        <a href="#collections" class="nav-item">Collections</a>
+        <a href="#about" class="nav-item">About</a>
+      </div>
+    </nav>
+
+    <section class="hero" id="hero">
+      <h1>Where every page feels like home.</h1>
+      <a href="#collections" class="book-collections-btn">View Collections</a>
+    </section>
 
     <!-- 
         Add A New Book feature 
@@ -20,79 +33,87 @@
          
     -->
 
-    <dialog id="form-dialog">
-      <h2>Add a New Book</h2>
-      <form action="dialog" id="bookForm">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required />
+    <section class="collections" id="collections">
+      <h1>Book Collections</h1>
+      <div class="book-collections-container">
+        <dialog id="form-dialog">
+          <form action="dialog" id="bookForm">
+            <h2>Add a New Book</h2>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required />
 
-        <label for="author">Author:</label>
-        <input type="text" id="author" name="author" required />
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required />
 
-        <label for="title">Pages:</label>
-        <input type="number" id="pages" name="pages" required />
+            <label for="title">Pages:</label>
+            <input type="number" id="pages" name="pages" required />
 
-        <label for="status">Status:</label>
-        <select name="status" id="status-select">
-          <option value="">--Please select an option--</option>
-          <option value="read">Read</option>
-          <option value="not read">Not Read</option>
-        </select>
+            <label for="status">Status:</label>
+            <select name="status" id="status-select">
+              <option value="">--Please select an option--</option>
+              <option value="read">Read</option>
+              <option value="not read">Not Read</option>
+            </select>
 
-        <div class="btn-container">
-          <button>Clear</button>
-          <button type="submit">Submit</button>
-          <button type="button" id="close-dialog">Cancel</button>
+            <div class="btn-container">
+              <button id="clear-btn">Clear</button>
+              <button type="submit">Submit</button>
+              <button type="button" id="close-dialog">Cancel</button>
+            </div>
+          </form>
+        </dialog>
+        <button class="add-book" id="open-dialog">Add a New Book</button>
+      </div>
+
+      <div class="book-container"></div>
+    </section>
+
+    <section class="about" id="about">
+      <h1>About Us</h1>
+      <div class="about-container">
+        <div class="about-text">
+          <div class="about-para">
+            At BookNook, we believe that every story deserves a reader, and
+            every reader deserves a story that speaks to them. Our library was
+            built with one simple mission — to bring the joy of reading closer
+            to everyone, one book at a time.
+          </div>
+
+          <div class="about-para">
+            Whether you’re into timeless classics, thrilling mysteries, or the
+            latest bestsellers, BookNook is your cozy corner on the web to
+            explore, borrow, and fall in love with books all over again.
+          </div>
+          <div class="about-para">
+            <h2>Our Story</h2>
+            <p>
+              Founded by book lovers for book lovers, BookNook began as a small
+              digital space for sharing reading recommendations among friends.
+              What started as a passion project soon grew into a full-fledged
+              online library, offering thousands of titles across genres — all
+              accessible at your fingertips.
+            </p>
+          </div>
+
+          <div class="about-para">
+            <h2>Our Mission</h2>
+            <p>
+              To inspire curiosity, spark imagination, and create a community
+              that celebrates the magic of books — one reader, one story, one
+              chapter at a time.
+            </p>
+          </div>
         </div>
-      </form>
-    </dialog>
-    <button class="add-book" id="open-dialog">Add a New Book</button>
+      </div>
+    </section>
 
-    <div class="book-container"></div>
+    <footer>
+      <div>©</div>
+      <div>2025 Turn the Page</div>
+      <div>|</div>
+      <div>JKGYSO</div>
+    </footer>
 
     <script src="./script.js"></script>
   </body>
 </html>
-
-<!-- 
-
-  1st Requirement 
- - book objects are going to be stored in an array 
- - Use a constructor for books 
- - add a separate function that can take some arguments 
-  - create a book from those arguments 
-  - book objects should have a unique id using crypto.randomUUID();
-    - purpose: ensures each book has a unique and stable identifier, preventing issues when books are removed or rearranged. 
-
-
-    2nd requirement 
-        - write a function that loops through the array and displays each book on the page 
-        - this can be displayed in some sort of a table or each on their own card. 
-
-    3rd requirement 
-        - add a New Book button that brings up a form allowing users to input the details for the new book and add it to the library 
-            - author 
-            - title
-            - number of pages 
-            - read or unread 
-        - when using a form, remember to use event.preventDefault();
-
-    4th requirement 
-        - add a button on each book's display to remove the book from the library 
-            - Clue: give book elements a data-attribute that corresponds to the unique id of the respective book object. 
-
-    5th requirement
-        - add a button on each book's display to change its read status 
-            - You will want to create Book prototype function that toggles a book instance's read status 
-
-    SUMMARY: 
-        1. Add books 
-            - add author, title, number of pages, read or unread 
-            - add unique ID using crypto.randomUUID()
-        2. Display each book 
-        3. New Book button that opens a form and should input 
-            - author, title, number of pages, read or unread 
-        4. Add remove button to each card 
-        5. Add a button to change the read status 
-
--->

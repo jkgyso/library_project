@@ -1,6 +1,6 @@
 :root {
   --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-primary: Montserrat, sans-serif, var(--system-ui);
+  --font-primary: 'Space Grotesk', Montserrat, sans-serif, var(--system-ui);
 }
 
 *, *::before, *::after {
@@ -24,9 +24,9 @@ body {
   min-height: 100vh; 
   display: flex; 
   flex-direction: column; 
-  align-items: center;
-  gap: 2rem; 
-  padding: 1rem;
+  font-family: var(--font-primary);
+  /* align-items: center; */
+
 }
 
 img, picture, video, canvas, svg {
@@ -50,37 +50,277 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
-#root, #__next {
-  isolation: isolate;
+/* Navbar */
+#navbar {
+    display: flex; 
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    align-items: center;
+    background: #FFFCF2;
+    color: #403D39;
 }
 
-.book-container {
-    border: 2px solid black;
-    display: flex; 
-    gap: 1rem;
-    padding: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+.nav-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-evenly;
 }
+
+.logo {
+  font-size: clamp(1.2rem, 1.8vw, 2rem);
+  font-weight: 700;
+}
+
+.nav-item {
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #403D39;
+}
+
+/* Hero */
+#hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://images.pexels.com/photos/5741872/pexels-photo-5741872.jpeg);
+  min-width: 100vw;
+  min-height: 70vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #FFFCF2;
+  font-family: 'Lora';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-style: italic
+}
+
+.book-collections-btn {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: #FFFCF2;
+  background-color: #EB5E28;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+  text-decoration: none;
+}
+
+.book-collections-btn:hover {
+  position: relative; 
+  top: -2px;
+  box-shadow: 1px 2px 21px 4px rgba(255,252,242,0.5);
+}
+
+/* Books Section */
+
+#collections {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  /* min-height: 100vh; */
+  min-width: 100vw;
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+
+#collections #open-dialog {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #403D39;
+  color: #FFFCF2;
+  font-weight: 700;
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+}
+
+#collections #open-dialog:hover {
+  position: relative;
+  top: -2px; 
+  box-shadow: 1px 2px 21px 4px rgba(64,61,57,0.5);
+}
+
+
+.book-container {
+    width: min(1000px, 80vw);
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    height: 100%;
+}
+
 
 .card {
     display: flex; 
     flex-direction: column; 
     gap: 1rem; 
-    padding: 1rem;
+    padding: 2.5rem;
     border: 2px solid black;
-    justify-content: center;
-    align-items: center; 
-    width: min(300px, 50vw);
-    min-height: 10vh;
-    flex: 1;
+    justify-content: flex-end;
+    max-height: 20vh;
+    border-radius: 0.5rem;
+    height: auto;
+    box-shadow: 1px 2px 21px 4px rgba(64,61,57,0.5);
+    border: none;
+}
+
+.book-title {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-size: 700;
+}
+
+.book-author, .book-pages, .book-status {
+  font-family: 'Lora';
+    font-size: clamp(1rem, 1.2vw, 1.3rem);
+}
+
+span {
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+}
+
+.read, .not-read {
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .read {
-    background: lightgreen;
+    background: #EB5E28;
+    color: #FFFCF2;
 }
 
 .not-read {
-    background: lightcoral;
+    background: #CCC5B9;
+}
+
+.remove-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none; 
+  border-top: 2px solid black;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.remove-button:hover {
+ box-shadow: 1px 10px 33px 3px rgba(64,61,57,0.44);
+
+}
+
+#form-dialog {
+  display: hidden; 
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#form-dialog[open] {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+  align-self: center;
+  width: min(500px, 50vw);
+  min-height: 40vh;
+  position: fixed;
+  border: none;
+  border-radius: 0.5rem;
+  background: #FFFCF2;
+}
+
+#form-dialog form {
+  display: flex; 
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  gap: 0.4rem;
+  border: none;
+}
+
+#form-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#bookForm label {
+  font-weight: 700;
+}
+
+
+
+#bookForm input, #bookForm select {
+  padding: 0.3rem;
+  border-radius: 0.5rem;
+}
+
+.btn-container {
+  display: flex; 
+  padding-top: 1.5rem;
+  gap: 1rem;
+}
+
+.btn-container button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 600;
+  border: none;
+  cursor: pointer;
+}
+
+#clear-btn {
+  background: #403D39;
+  color: #FFFCF2; 
+}
+
+.btn-container button[type=submit] {
+  background: #EB5E28;
+  color: #FFFCF2;
+}
+
+#about {
+  background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://images.pexels.com/photos/1907786/pexels-photo-1907786.jpeg);
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  min-width: 100vw;
+  flex-wrap: wrap;
+  padding: 1rem;
+  color: #FFFCF2;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.about-container {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  width: min(800px, 70vw)
+}
+
+.about-container .about-text {
+  display: flex; 
+  flex-direction: column; 
+  gap: 2rem;
+  padding: 2rem;
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+}
+
+
+footer {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 1.5rem; 
+  background: #252422;
+  color: #FFFCF2;
+  gap: 1rem;
+  font-size: 700;
 }
