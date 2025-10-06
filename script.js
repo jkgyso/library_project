@@ -25,9 +25,10 @@ function addBookToLibrary(author, title, pages, readStatus) {
     myLibrary.push(newBook);
 }
 
-addBookToLibrary('John Smith', 'Javascript', 345, 'read');
-addBookToLibrary('Jane Doe', 'CSS', 123, 'not read');
-addBookToLibrary('Mikasa Ackerman', 'React', 567, 'read');
+addBookToLibrary('Harper Lee', 'To Kill a Mockingbird', 281, 'read');
+addBookToLibrary('F. Scott Fitzgerald', 'The Great Gatsby', 180, 'not read');
+addBookToLibrary('George Orwell', '1984', 328, 'read');
+addBookToLibrary('J.R.R Tolkien', 'The Hobbit', 310, 'read');
 
 console.log(myLibrary)
 console.log(myLibrary[0].readStatus)
